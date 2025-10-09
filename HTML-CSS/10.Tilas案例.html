@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Tlias智能学习辅助系统</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    /* 顶部导航栏 */
+    .navbar {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .title {
+      font-weight: bold;
+      font-size: 24px;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logout-link {
+      text-decoration: none;
+      color: white;
+      padding: 8px 15px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    
+    .logout-link:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    /* 主容器 */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* 搜索表单区域 */
+    .search-form {
+      background: white;
+      padding: 25px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+    
+    .form-item {
+      display: flex;
+      align-items: center;
+      flex: 1 1 200px;
+    }
+    
+    .form-item label {
+      white-space: nowrap;
+      margin-right: 10px;
+      font-weight: 500;
+      color: #555;
+      width: 60px;
+    }
+    
+    .form-item input,
+    .form-item select {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid #dcdfe6;
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+    
+    .form-item input:focus,
+    .form-item select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+    }
+    
+    .form-buttons {
+      display: flex;
+      gap: 12px;
+      margin-left: auto;
+    }
+    
+    .form-buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .search-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .search-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    .reset-btn {
+      background-color: #909399;
+      color: white;
+    }
+    
+    .reset-btn:hover {
+      background-color: #a6a9ad;
+      transform: translateY(-2px);
+    }
+    
+    /* 表格展示区 */
+    .table-container {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+    
+    th, td {
+      padding: 15px 20px;
+      text-align: left;
+      border-bottom: 1px solid #ebeef5;
+    }
+    
+    th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      color: #606266;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    tbody tr {
+      transition: background-color 0.3s;
+    }
+    
+    tbody tr:hover {
+      background-color: #f5f7fa;
+    }
+    
+    .avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ebeef5;
+    }
+    
+    .operation-btn {
+      padding: 6px 12px;
+      margin: 0 4px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.3s ease;
+    }
+    
+    .edit-btn {
+      background-color: #e6f7ff;
+      color: #1890ff;
+      border: 1px solid #91d5ff;
+    }
+    
+    .edit-btn:hover {
+      background-color: #1890ff;
+      color: white;
+    }
+    
+    .delete-btn {
+      background-color: #fff1f0;
+      color: #f5222d;
+      border: 1px solid #ffa39e;
+    }
+    
+    .delete-btn:hover {
+      background-color: #f5222d;
+      color: white;
+    }
+    
+    /* 页脚版权区域 */
+    .footer {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 20px;
+    }
+    
+    .company-name {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+    
+    .copyright {
+      font-size: 14px;
+      opacity: 0.9;
+      letter-spacing: 0.5px;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .search-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .form-item {
+        flex: 1 1 100%;
+      }
+      
+      .form-buttons {
+        margin-left: 0;
+        justify-content: center;
+      }
+      
+      th, td {
+        padding: 10px 8px;
+        font-size: 12px;
+      }
+      
+      .avatar {
+        width: 30px;
+        height: 30px;
+      }
+      
+      .operation-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <div class="navbar">
+    <h1 class="title">Tlias智能学习辅助系统</h1>
+    <a href="#" class="logout-link">退出登录</a>
+  </div>
+  
+  <div class="container">
+    <!-- 搜索表单区域 -->
+    <div class="search-form">
+      <div class="form-item">
+        <label for="name">姓名：</label>
+        <input type="text" id="name" name="name" placeholder="请输入姓名">
+      </div>
+      
+      <div class="form-item">
+        <label for="gender">性别：</label>
+        <select id="gender" name="gender">
+          <option value="">请选择</option>
+          <option value="男">男</option>
+          <option value="女">女</option>
+        </select>
+      </div>
+      
+      <div class="form-item">
+        <label for="position">职位：</label>
+        <select id="position" name="position">
+          <option value="">请选择</option>
+          <option value="班主任">班主任</option>
+          <option value="讲师">讲师</option>
+          <option value="学工主管">学工主管</option>
+          <option value="教研主管">教研主管</option>
+          <option value="咨询师">咨询师</option>
+        </select>
+      </div>
+      
+      <div class="form-buttons">
+        <button type="submit" class="search-btn">查询</button>
+        <button type="reset" class="reset-btn">清空</button>
+      </div>
+    </div>
+    
+    <!-- 表格展示区 -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>头像</th>
+            <th>职位</th>
+            <th>入职日期</th>
+            <th>最后操作时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>令狐冲</td>
+            <td>男</td>
+            <td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9IiMxZTlhbWIiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjQwIiByPSI1IiBmaWxsPSIjZmZmIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI0MCIgcj0iNSIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0zMCA3MCBRIDUwIDg1IDcwIDcwIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==" alt="令狐冲头像" class="avatar"></td>
+            <td>讲师</td>
+            <td>2020-03-15</td>
+            <td>2023-10-01 14:30</td>
+            <td>
+              <button class="operation-btn edit-btn">编辑</button>
+              <button class="operation-btn delete-btn">删除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>任盈盈</td>
+            <td>女</td>
+            <td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9IiNmY2E0YWIiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjQwIiByPSI1IiBmaWxsPSIjZmZmIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI0MCIgcj0iNSIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0zNSA2NSBRIDUwIDc1IDY1IDY1IiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==" alt="任盈盈头像" class="avatar"></td>
+            <td>教研主管</td>
+            <td>2019-07-22</td>
+            <td>2023-10-02 09:15</td>
+            <td>
+              <button class="operation-btn edit-btn">编辑</button>
+              <button class="operation-btn delete-btn">删除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>岳不群</td>
+            <td>男</td>
+            <td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9IiNlZWUiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjQwIiByPSI1IiBmaWxsPSIjMDAwIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI0MCIgcj0iNSIgZmlsbD0iIzAwMCIvPjxwYXRoIGQ9Ik00MCA2NSBRIDUwIDcwIDYwIDY1IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==" alt="岳不群头像" class="avatar"></td>
+            <td>班主任</td>
+            <td>2018-05-10</td>
+            <td>2023-10-03 16:45</td>
+            <td>
+              <button class="operation-btn edit-btn">编辑</button>
+              <button class="operation-btn delete-btn">删除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>林平之</td>
+            <td>男</td>
+            <td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9IiNmZGMxYjEiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjQwIiByPSI1IiBmaWxsPSIjMDAwIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI0MCIgcj0iNSIgZmlsbD0iIzAwMCIvPjxwYXRoIGQ9Ik00MCA2NSBRIDUwIDcwIDYwIDY1IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==" alt="林平之头像" class="avatar"></td>
+            <td>讲师</td>
+            <td>2021-02-18</td>
+            <td>2023-10-04 10:20</td>
+            <td>
+              <button class="operation-btn edit-btn">编辑</button>
+              <button class="operation-btn delete-btn">删除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>左冷禅</td>
+            <td>男</td>
+            <td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9IiNlMGUwZTAiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjQwIiByPSI1IiBmaWxsPSIjMDAwIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI0MCIgcj0iNSIgZmlsbD0iIzAwMCIvPjxwYXRoIGQ9Ik00MCA2NSBRIDUwIDcwIDYwIDY1IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==" alt="左冷禅头像" class="avatar"></td>
+            <td>学工主管</td>
+            <td>2017-11-30</td>
+            <td>2023-10-05 13:45</td>
+            <td>
+              <button class="operation-btn edit-btn">编辑</button>
+              <button class="operation-btn delete-btn">删除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>任我行</td>
+            <td>男</td>
+            <td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9IiNkMmI0OGMiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjQwIiByPSI1IiBmaWxsPSIjMDAwIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI0MCIgcj0iNSIgZmlsbD0iIzAwMCIvPjxwYXRoIGQ9Ik00MCA2NSBRIDUwIDcwIDYwIDY1IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==" alt="任我行头像" class="avatar"></td>
+            <td>教研主管</td>
+            <td>2016-09-12</td>
+            <td>2023-10-06 09:30</td>
+            <td>
+              <button class="operation-btn edit-btn">编辑</button>
+              <button class="operation-btn delete-btn">删除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>仪琳</td>
+            <td>女</td>
+            <td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9IiNmZWNkZGMiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjQwIiByPSI1IiBmaWxsPSIjMDAwIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI0MCIgcj0iNSIgZmlsbD0iIzAwMCIvPjxwYXRoIGQ9Ik0zNSA2NSBRIDUwIDc1IDY1IDY1IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==" alt="仪琳头像" class="avatar"></td>
+            <td>咨询师</td>
+            <td>2022-07-08</td>
+            <td>2023-10-07 15:10</td>
+            <td>
+              <button class="operation-btn edit-btn">编辑</button>
+              <button class="operation-btn delete-btn">删除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>向问天</td>
+            <td>男</td>
+            <td><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9IiNjY2NjY2MiLz48Y2lyY2xlIGN4PSIzNSIgY3k9IjQwIiByPSI1IiBmaWxsPSIjMDAwIi8+PGNpcmNsZSBjeD0iNjUiIGN5PSI0MCIgcj0iNSIgZmlsbD0iIzAwMCIvPjxwYXRoIGQ9Ik00MCA2NSBRIDUwIDcwIDYwIDY1IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==" alt="向问天头像" class="avatar"></td>
+            <td>班主任</td>
+            <td>2018-03-25</td>
+            <td>2023-10-08 11:25</td>
+            <td>
+              <button class="operation-btn edit-btn">编辑</button>
+              <button class="operation-btn delete-btn">删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- 页脚版权区域 -->
+  <div class="footer">
+    <div class="company-name">江苏传智播客教育科技股份有限公司</div>
+    <div class="copyright">版权所有 Copyright 2016-2024 All Rights Reserved</div>
+  </div>
+</body>
+</html>

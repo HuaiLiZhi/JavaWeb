@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input type="button" value="获取数据GET" id="btnGet">
+<input type="button" value="获取数据Post" id="btnPost">
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    document.querySelector('#btnGet').addEventListener('click', () => {
+        //https://mock.apifox.cn/m1/3083103-0-default/emps/list
+        axios({
+            url: 'https://mock.apifox.cn/m1/3083103-0-default/emps/list',
+            method: 'GET'
+        }).then((result) => {
+            console.log(result)
+        }).catch((err) => {
+            console.log(err)
+        })
+    })
+
+    document.querySelector('#btnPost').addEventListener('click', () => {
+        //https://mock.apifox.cn/m1/3083103-0-default/emps/update
+        axios({
+            url: 'https://mock.apifox.cn/m1/3083103-0-default/emps/update',
+            method: 'POST',
+            data: 'id=1'
+        }).then((result) => {
+            console.log(result)
+        }).catch((err) => {
+            console.log(err)
+        })
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>带查询按钮的员工表格</title>
+    <!-- 引入Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body class="p-4 bg-gray-50">
+<div id="app">
+    <!-- 查询筛选区域 -->
+    <div class="mb-6 p-4 bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div class="flex flex-wrap gap-4 items-center">
+            <!-- 姓名筛选 -->
+            <div class="flex items-center gap-2">
+                <label class="text-gray-700">姓名：</label>
+                <input
+                        type="text"
+                        v-model="searchForm.name"
+                        placeholder="请输入姓名"
+                        class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
+
+            <!-- 性别筛选 -->
+            <div class="flex items-center gap-2">
+                <label class="text-gray-700">性别：</label>
+                <select
+                        v-model="searchForm.gender"
+                        class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="">全部</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+
+            <!-- 职位筛选 -->
+            <div class="flex items-center gap-2">
+                <label class="text-gray-700">职位：</label>
+                <select
+                        v-model="searchForm.job"
+                        class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="">全部</option>
+                    <option value="1">班主任</option>
+                    <option value="2">讲师</option>
+                    <option value="3">学工主管</option>
+                    <option value="4">教研主管</option>
+                    <option value="5">咨询师</option>
+                    <option value="6">其它</option>
+                </select>
+            </div>
+
+            <!-- 查询和重置按钮 -->
+            <div class="flex gap-2 ml-auto">
+                <button
+                        @click="handleSearch"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                    <i class="fa fa-search mr-1"></i> 查询
+                </button>
+                <button
+                        @click="handleReset"
+                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                >
+                    <i class="fa fa-refresh mr-1"></i> 重置
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 员工表格 -->
+    <table class="min-w-full border border-gray-200 bg-white rounded-lg shadow-sm">
+        <thead class="bg-gray-50">
+        <tr>
+            <th class="px-4 py-2 border border-gray-200">ID</th>
+            <th class="px-4 py-2 border border-gray-200">姓名</th>
+            <th class="px-4 py-2 border border-gray-200">头像</th>
+            <th class="px-4 py-2 border border-gray-200">性别</th>
+            <th class="px-4 py-2 border border-gray-200">职位</th>
+            <th class="px-4 py-2 border border-gray-200">入职日期</th>
+            <th class="px-4 py-2 border border-gray-200">更新时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="employee in filteredEmployees" :key="employee.id" class="hover:bg-gray-50">
+            <td class="px-4 py-2 border border-gray-200">{{ employee.id }}</td>
+            <td class="px-4 py-2 border border-gray-200">{{ employee.name }}</td>
+            <td class="px-4 py-2 border border-gray-200">
+                <img
+                        :src="employee.image"
+                        :alt="employee.name + '的头像'"
+                        class="w-10 h-10 object-cover rounded"
+                >
+            </td>
+            <td class="px-4 py-2 border border-gray-200">
+                <span v-if="employee.gender === '男'" class="text-blue-600">男</span>
+                <span v-else class="text-pink-600">女</span>
+            </td>
+            <td class="px-4 py-2 border border-gray-200">
+                <span v-show="employee.job === '1'">班主任</span>
+                <span v-show="employee.job === '2'">讲师</span>
+                <span v-show="employee.job === '3'">学工主管</span>
+                <span v-show="employee.job === '4'">教研主管</span>
+                <span v-show="employee.job === '5'">咨询师</span>
+                <span v-show="employee.job === '6'">其它</span>
+            </td>
+            <td class="px-4 py-2 border border-gray-200">{{ employee.entrydate }}</td>
+            <td class="px-4 py-2 border border-gray-200">{{ employee.updatetime }}</td>
+        </tr>
+        <!-- 无数据时显示提示 -->
+        <tr v-if="filteredEmployees.length === 0">
+            <td colspan="7" class="px-4 py-4 text-center text-gray-500 border border-gray-200">
+                暂无匹配的员工数据
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+        setup() {
+            // 筛选表单数据
+            const searchForm = ref({
+                name: '',
+                gender: '',
+                job: ''
+            });
+
+            // 员工数据
+            const employees = ref([
+                {
+                    id: '001',
+                    name: '张三',
+                    gender: '男',
+                    job: '1',
+                    entrydate: '2020-03-15',
+                    updatetime: '2023-10-01 09:30',
+                    image: 'https://picsum.photos/id/1012/200/200'
+                },
+                {
+                    id: '002',
+                    name: '李四',
+                    gender: '女',
+                    job: '2',
+                    entrydate: '2019-11-22',
+                    updatetime: '2023-10-02 14:15',
+                    image: 'https://picsum.photos/id/1027/200/200'
+                },
+                {
+                    id: '003',
+                    name: '王五',
+                    gender: '男',
+                    job: '3',
+                    entrydate: '2021-05-30',
+                    updatetime: '2023-10-03 16:45',
+                    image: 'https://picsum.photos/id/1074/200/200'
+                },
+                {
+                    id: '004',
+                    name: '赵六',
+                    gender: '女',
+                    job: '4',
+                    entrydate: '2022-01-18',
+                    updatetime: '2023-10-04 10:20',
+                    image: 'https://picsum.photos/id/1062/200/200'
+                },
+                {
+                    id: '005',
+                    name: '钱七',
+                    gender: '男',
+                    job: '5',
+                    entrydate: '2021-09-05',
+                    updatetime: '2023-10-05 08:50',
+                    image: 'https://picsum.photos/id/1025/200/200'
+                },
+                {
+                    id: '006',
+                    name: '孙八',
+                    gender: '女',
+                    job: '6',
+                    entrydate: '2020-07-12',
+                    updatetime: '2023-10-05 11:30',
+                    image: 'https://picsum.photos/id/1066/200/200'
+                }
+            ]);
+
+            // 筛选后的员工数据
+            const filteredEmployees = ref([...employees.value]);
+
+            // 处理查询
+            const handleSearch = () => {
+                filteredEmployees.value = employees.value.filter(emp => {
+                    const nameMatch = emp.name.toLowerCase().includes(searchForm.value.name.toLowerCase());
+                    const genderMatch = searchForm.value.gender === '' || emp.gender === searchForm.value.gender;
+                    const jobMatch = searchForm.value.job === '' || emp.job === searchForm.value.job;
+
+                    return nameMatch && genderMatch && jobMatch;
+                });
+            };
+
+            // 处理重置
+            const handleReset = () => {
+                // 清空表单
+                searchForm.value = {
+                    name: '',
+                    gender: '',
+                    job: ''
+                };
+                // 显示所有数据
+                filteredEmployees.value = [...employees.value];
+            };
+
+            return {
+                searchForm,
+                filteredEmployees,
+                handleSearch,
+                handleReset
+            };
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

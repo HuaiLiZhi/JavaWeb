@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>夜半惊魂 | The Midnight Terror</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'horror-black': '#0a0a0a',
+            'horror-red': '#8b0000',
+            'horror-gray': '#1a1a1a',
+            'horror-white': '#f0e6e6',
+          },
+          fontFamily: {
+            'horror': ['"Creepster"', 'cursive', 'sans-serif'],
+            'normal': ['"EB Garamond"', 'serif'],
+          },
+          animation: {
+            'flicker': 'flicker 3s linear infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+          },
+          keyframes: {
+            flicker: {
+              '0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100%': { opacity: '1' },
+              '20%, 21.999%, 63%, 63.999%, 65%, 69.999%': { opacity: '0.4' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            shake: {
+              '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+              '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+              '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+              '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-shadow {
+        text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
+      }
+      .text-shadow-sm {
+        text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+      }
+      .bg-noise {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+      }
+      .glitch {
+        position: relative;
+      }
+      .glitch::before, .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .glitch::before {
+        left: 2px;
+        text-shadow: -2px 0 #ff00c1;
+        clip: rect(44px, 450px, 56px, 0);
+        animation: glitch-anim 5s infinite linear alternate-reverse;
+      }
+      .glitch::after {
+        left: -2px;
+        text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+        clip: rect(24px, 450px, 36px, 0);
+        animation: glitch-anim2 5s infinite linear alternate-reverse;
+      }
+      @keyframes glitch-anim {
+        0% { clip: rect(42px, 9999px, 44px, 0); }
+        5% { clip: rect(12px, 9999px, 59px, 0); }
+        10% { clip: rect(48px, 9999px, 29px, 0); }
+        15% { clip: rect(42px, 9999px, 73px, 0); }
+        20% { clip: rect(63px, 9999px, 27px, 0); }
+        25% { clip: rect(34px, 9999px, 55px, 0); }
+        30% { clip: rect(86px, 9999px, 73px, 0); }
+        35% { clip: rect(20px, 9999px, 20px, 0); }
+        40% { clip: rect(26px, 9999px, 60px, 0); }
+        45% { clip: rect(25px, 9999px, 66px, 0); }
+        50% { clip: rect(57px, 9999px, 98px, 0); }
+        55% { clip: rect(5px, 9999px, 46px, 0); }
+        60% { clip: rect(82px, 9999px, 31px, 0); }
+        65% { clip: rect(54px, 9999px, 27px, 0); }
+        70% { clip: rect(28px, 9999px, 99px, 0); }
+        75% { clip: rect(45px, 9999px, 69px, 0); }
+        80% { clip: rect(23px, 9999px, 85px, 0); }
+        85% { clip: rect(54px, 9999px, 84px, 0); }
+        90% { clip: rect(45px, 9999px, 47px, 0); }
+        95% { clip: rect(37px, 9999px, 20px, 0); }
+        100% { clip: rect(4px, 9999px, 91px, 0); }
+      }
+      @keyframes glitch-anim2 {
+        0% { clip: rect(65px, 9999px, 100px, 0); }
+        5% { clip: rect(52px, 9999px, 74px, 0); }
+        10% { clip: rect(79px, 9999px, 85px, 0); }
+        15% { clip: rect(75px, 9999px, 5px, 0); }
+        20% { clip: rect(67px, 9999px, 61px, 0); }
+        25% { clip: rect(14px, 9999px, 79px, 0); }
+        30% { clip: rect(1px, 9999px, 66px, 0); }
+        35% { clip: rect(86px, 9999px, 30px, 0); }
+        40% { clip: rect(23px, 9999px, 98px, 0); }
+        45% { clip: rect(85px, 9999px, 72px, 0); }
+        50% { clip: rect(71px, 9999px, 75px, 0); }
+        55% { clip: rect(2px, 9999px, 48px, 0); }
+        60% { clip: rect(30px, 9999px, 16px, 0); }
+        65% { clip: rect(59px, 9999px, 50px, 0); }
+        70% { clip: rect(41px, 9999px, 62px, 0); }
+        75% { clip: rect(2px, 9999px, 82px, 0); }
+        80% { clip: rect(47px, 9999px, 73px, 0); }
+        85% { clip: rect(3px, 9999px, 27px, 0); }
+        90% { clip: rect(26px, 9999px, 55px, 0); }
+        95% { clip: rect(42px, 9999px, 97px, 0); }
+        100% { clip: rect(38px, 9999px, 49px, 0); }
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=EB+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-horror-black text-horror-white min-h-screen overflow-x-hidden bg-noise">
+<!-- 音频元素 - 背景音乐 -->
+<audio id="background-sound" loop>
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-distant-thunder-rumble-1272.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 音频元素 - 惊吓音效 -->
+<audio id="jump-scare-sound">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-girl-screaming-in-fear-2042.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 闪烁的灯光效果 -->
+<div id="light-flicker" class="fixed inset-0 bg-horror-red/10 pointer-events-none opacity-0 transition-opacity duration-1000"></div>
+
+<!-- 顶部导航 -->
+<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-horror-black/70 border-b border-horror-red/30">
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <div class="text-2xl md:text-3xl font-horror text-horror-red text-shadow">
+      夜半惊魂
+    </div>
+    <div class="hidden md:flex space-x-6 items-center">
+      <a href="#stories" class="hover:text-horror-red transition-colors duration-300">恐怖故事</a>
+      <a href="#gallery" class="hover:text-horror-red transition-colors duration-300">灵异照片</a>
+      <a href="#encounters" class="hover:text-horror-red transition-colors duration-300">真实遭遇</a>
+      <button id="sound-toggle" class="text-xl hover:text-horror-red transition-colors duration-300">
+        <i class="fa fa-volume-up"></i>
+      </button>
+    </div>
+    <button id="mobile-menu-button" class="md:hidden text-2xl">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+  <!-- 移动端菜单 -->
+  <div id="mobile-menu" class="hidden md:hidden bg-horror-gray/95 backdrop-blur-md">
+    <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+      <a href="#stories" class="py-2 hover:text-horror-red transition-colors duration-300">恐怖故事</a>
+      <a href="#gallery" class="py-2 hover:text-horror-red transition-colors duration-300">灵异照片</a>
+      <a href="#encounters" class="py-2 hover:text-horror-red transition-colors duration-300">真实遭遇</a>
+      <button id="mobile-sound-toggle" class="text-left py-2 hover:text-horror-red transition-colors duration-300">
+        <i class="fa fa-volume-up mr-2"></i> 声音
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- 英雄区域 -->
+<header class="relative h-screen flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <img src="https://picsum.photos/id/1059/1920/1080" alt="阴暗的森林夜景" class="w-full h-full object-cover opacity-40">
+    <div class="absolute inset-0 bg-gradient-to-b from-horror-black/70 via-horror-black/50 to-horror-black"></div>
+  </div>
+
+  <div class="container mx-auto px-4 z-10 text-center">
+    <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-horror mb-6 glitch" data-text="不要回头">不要回头</h1>
+    <p class="text-[clamp(1rem,3vw,1.5rem)] max-w-2xl mx-auto mb-10 font-normal leading-relaxed text-shadow-sm">
+      当你听到身后有脚步声，不要回头。当你看到镜子里有不属于你的影子，不要惊慌。当你感觉到冰冷的呼吸...
+    </p>
+    <a href="#stories" class="inline-block bg-horror-red/80 hover:bg-horror-red text-white font-bold py-3 px-8 rounded-sm transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-horror-red/20">
+      进入未知 <i class="fa fa-arrow-down ml-2 animate-bounce"></i>
+    </a>
+  </div>
+
+  <!-- 随机出现的惊吓元素 -->
+  <div id="jump-scare" class="fixed inset-0 z-50 flex items-center justify-center bg-horror-black opacity-0 pointer-events-none transition-opacity duration-300">
+    <img src="https://picsum.photos/id/1074/800/800" alt="恐怖面孔" class="max-w-full max-h-full object-contain">
+  </div>
+</header>
+
+<!-- 故事部分 -->
+<section id="stories" class="py-20 relative">
+  <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1015/1920/1080')] bg-cover bg-fixed opacity-5"></div>
+  <div class="container mx-auto px-4 relative z-10">
+    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-horror mb-16 text-center text-horror-red text-shadow">
+      恐怖故事
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- 故事卡片 1 -->
+      <div class="bg-horror-gray/60 backdrop-blur-sm rounded-sm overflow-hidden group hover:shadow-lg hover:shadow-horror-red/10 transition-all duration-500 transform hover:-translate-y-1 border border-horror-red/20">
+        <div class="h-56 overflow-hidden relative">
+          <img src="https://picsum.photos/id/1037/600/400" alt="老旧的房子" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-horror-black to-transparent"></div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-horror mb-4 text-horror-red group-hover:text-white transition-colors duration-300">午夜敲门声</h3>
+          <p class="text-horror-white/80 mb-4 leading-relaxed">
+            那是一个暴风雨的夜晚，我独自在家。午夜时分，突然响起了敲门声...
+          </p>
+          <a href="#" class="inline-flex items-center text-horror-red hover:text-white transition-colors duration-300">
+            继续阅读 <i class="fa fa-long-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 故事卡片 2 -->
+      <div class="bg-horror-gray/60 backdrop-blur-sm rounded-sm overflow-hidden group hover:shadow-lg hover:shadow-horror-red/10 transition-all duration-500 transform hover:-translate-y-1 border border-horror-red/20">
+        <div class="h-56 overflow-hidden relative">
+          <img src="https://picsum.photos/id/1079/600/400" alt="昏暗的走廊" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-horror-black to-transparent"></div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-horror mb-4 text-horror-red group-hover:text-white transition-colors duration-300">镜中陌生人</h3>
+          <p class="text-horror-white/80 mb-4 leading-relaxed">
+            我新买了一面古董镜子，挂在卧室里。直到有一天，我发现镜子里的我...
+          </p>
+          <a href="#" class="inline-flex items-center text-horror-red hover:text-white transition-colors duration-300">
+            继续阅读 <i class="fa fa-long-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 故事卡片 3 -->
+      <div class="bg-horror-gray/60 backdrop-blur-sm rounded-sm overflow-hidden group hover:shadow-lg hover:shadow-horror-red/10 transition-all duration-500 transform hover:-translate-y-1 border border-horror-red/20">
+        <div class="h-56 overflow-hidden relative">
+          <img src="https://picsum.photos/id/1060/600/400" alt="荒凉的道路" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-horror-black to-transparent"></div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-horror mb-4 text-horror-red group-hover:text-white transition-colors duration-300">搭车人</h3>
+          <p class="text-horror-white/80 mb-4 leading-relaxed">
+            深夜驾车回家，在一条偏僻的路上，我遇到了一个想要搭车的白衣女子...
+          </p>
+          <a href="#" class="inline-flex items-center text-horror-red hover:text-white transition-colors duration-300">
+            继续阅读 <i class="fa fa-long-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 灵异照片部分 -->
+<section id="gallery" class="py-20 bg-horror-gray/30 relative">
+  <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1019/1920/1080')] bg-cover bg-fixed opacity-5"></div>
+  <div class="container mx-auto px-4 relative z-10">
+    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-horror mb-16 text-center text-horror-red text-shadow">
+      灵异照片
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- 照片 1 -->
+      <div class="group relative overflow-hidden cursor-pointer aspect-square">
+        <img src="https://picsum.photos/id/1040/600/600" alt="废弃房屋内的灵异现象" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-horror-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <p class="text-center p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+            废弃学校的照片，放大后能看到窗户里的人影
+          </p>
+        </div>
+      </div>
+
+      <!-- 照片 2 -->
+      <div class="group relative overflow-hidden cursor-pointer aspect-square">
+        <img src="https://picsum.photos/id/1062/600/600" alt="夜晚森林中的神秘光影" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-horror-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <p class="text-center p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+            露营时拍摄的照片，事后才发现树上的轮廓
+          </p>
+        </div>
+      </div>
+
+      <!-- 照片 3 -->
+      <div class="group relative overflow-hidden cursor-pointer aspect-square">
+        <img src="https://picsum.photos/id/1067/600/600" alt="老照片中的异常" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-horror-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <p class="text-center p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+            1920年代的老照片，角落里有无法解释的身影
+          </p>
+        </div>
+      </div>
+
+      <!-- 照片 4 -->
+      <div class="group relative overflow-hidden cursor-pointer aspect-square">
+        <img src="https://picsum.photos/id/1073/600/600" alt="镜子反射中的异常" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-horror-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <p class="text-center p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+            自拍时，镜子中出现了不该存在的东西
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 真实遭遇部分 -->
+<section id="encounters" class="py-20 relative">
+  <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1057/1920/1080')] bg-cover bg-fixed opacity-5"></div>
+  <div class="container mx-auto px-4 relative z-10">
+    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-horror mb-16 text-center text-horror-red text-shadow">
+      真实遭遇
+    </h2>
+
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-12">
+        <!-- 遭遇 1 -->
+        <div class="bg-horror-gray/40 backdrop-blur-sm p-8 rounded-sm border-l-4 border-horror-red relative overflow-hidden group hover:bg-horror-gray/60 transition-all duration-500">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-horror-red/10 rounded-full -mr-16 -mt-16 group-hover:bg-horror-red/20 transition-all duration-700"></div>
+          <h3 class="text-2xl font-horror mb-4 text-horror-red relative z-10">出租屋的夜半哭声</h3>
+          <p class="text-horror-white/80 mb-4 leading-relaxed relative z-10">
+            "我租了一间老旧公寓的顶层，价格便宜得离谱。入住第一晚，我就听到了女人的哭声，像是从墙壁里传来的。起初我以为是隔壁，但整栋楼只有我一个住户。"
+          </p>
+          <p class="text-horror-white/80 leading-relaxed relative z-10">
+            "第三晚，哭声停在了我的门外。我吓得不敢出声，直到天亮才敢开门。门口什么都没有，但地板上有一串湿漉漉的脚印，从门口一直延伸到我的床边..."
+          </p>
+          <p class="text-right mt-6 text-horror-white/60 italic relative z-10">— 匿名</p>
+        </div>
+
+        <!-- 遭遇 2 -->
+        <div class="bg-horror-gray/40 backdrop-blur-sm p-8 rounded-sm border-l-4 border-horror-red relative overflow-hidden group hover:bg-horror-gray/60 transition-all duration-500">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-horror-red/10 rounded-full -mr-16 -mt-16 group-hover:bg-horror-red/20 transition-all duration-700"></div>
+          <h3 class="text-2xl font-horror mb-4 text-horror-red relative z-10">公路上的红衣女孩</h3>
+          <p class="text-horror-white/80 mb-4 leading-relaxed relative z-10">
+            "那年我17岁，和朋友深夜驾车回家。在一条偏僻的公路上，我们看到一个穿红裙的女孩站在路边挥手。我们停下车，但她突然消失了。"
+          </p>
+          <p class="text-horror-white/80 leading-relaxed relative z-10">
+            "我们没在意，继续开车。后视镜里，我看到那个女孩坐在后座，正对着我笑。我尖叫着回头，后座空无一人。第二天，我们得知那条路十年前有个穿红裙的女孩被撞死了..."
+          </p>
+          <p class="text-right mt-6 text-horror-white/60 italic relative z-10">— 李明</p>
+        </div>
+
+        <!-- 遭遇 3 -->
+        <div class="bg-horror-gray/40 backdrop-blur-sm p-8 rounded-sm border-l-4 border-horror-red relative overflow-hidden group hover:bg-horror-gray/60 transition-all duration-500">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-horror-red/10 rounded-full -mr-16 -mt-16 group-hover:bg-horror-red/20 transition-all duration-700"></div>
+          <h3 class="text-2xl font-horror mb-4 text-horror-red relative z-10">祖母的旧钟</h3>
+          <p class="text-horror-white/80 mb-4 leading-relaxed relative z-10">
+            "祖母去世后，我继承了她的旧座钟。那钟已经停了几十年，但我打扫时不小心碰了它一下，它竟然开始走了。更奇怪的是，它只在午夜12点准时敲响。"
+          </p>
+          <p class="text-horror-white/80 leading-relaxed relative z-10">
+            "有天晚上我失眠，看到钟的指针倒着走。钟面玻璃上，映出了祖母的脸，她正对着我微笑，然后慢慢消失。第二天，钟又停了，无论我怎么弄都再也没走起来..."
+          </p>
+          <p class="text-right mt-6 text-horror-white/60 italic relative z-10">— 王芳</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 订阅部分 -->
+<section class="py-20 bg-horror-red/10 relative">
+  <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1056/1920/1080')] bg-cover bg-fixed opacity-5"></div>
+  <div class="container mx-auto px-4 relative z-10 text-center">
+    <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-horror mb-6 text-horror-red text-shadow">
+      如果你敢...
+    </h2>
+    <p class="text-xl mb-10 max-w-2xl mx-auto text-horror-white/80">
+      订阅我们的恐怖通讯，每周收到令人毛骨悚然的故事和真实遭遇
+    </p>
+
+    <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+      <input type="email" placeholder="输入你的邮箱地址..." class="flex-1 bg-horror-gray/70 border border-horror-red/30 rounded-sm px-4 py-3 focus:outline-none focus:border-horror-red transition-colors duration-300">
+      <button type="submit" class="bg-horror-red hover:bg-horror-red/80 text-white font-bold py-3 px-8 rounded-sm transition-all duration-300 transform hover:scale-105">
+        订阅 <i class="fa fa-envelope-o ml-2"></i>
+      </button>
+    </form>
+
+    <p class="mt-4 text-sm text-horror-white/50">
+      警告：内容可能引起不适，心理承受能力弱者慎入
+    </p>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="bg-horror-black py-12 border-t border-horror-red/20">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <div class="text-2xl font-horror text-horror-red text-shadow mb-6 md:mb-0">
+        夜半惊魂
+      </div>
+
+      <div class="flex space-x-6 mb-6 md:mb-0">
+        <a href="#" class="text-horror-white/60 hover:text-horror-red transition-colors duration-300 text-xl">
+          <i class="fa fa-facebook"></i>
+        </a>
+        <a href="#" class="text-horror-white/60 hover:text-horror-red transition-colors duration-300 text-xl">
+          <i class="fa fa-twitter"></i>
+        </a>
+        <a href="#" class="text-horror-white/60 hover:text-horror-red transition-colors duration-300 text-xl">
+          <i class="fa fa-instagram"></i>
+        </a>
+        <a href="#" class="text-horror-white/60 hover:text-horror-red transition-colors duration-300 text-xl">
+          <i class="fa fa-youtube-play"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="border-t border-horror-white/10 mt-8 pt-8 text-center text-horror-white/40 text-sm">
+      <p>© 2023 夜半惊魂 | 所有故事和图片仅供娱乐</p>
+      <p class="mt-2">如果你在浏览时感到不适，请立即关闭本页</p>
+    </div>
+  </div>
+</footer>
+
+<!-- 浮动的幽灵元素 -->
+<div id="ghost" class="fixed top-1/4 left-1/4 w-32 h-32 opacity-0 pointer-events-none z-20 animate-float">
+  <img src="https://picsum.photos/id/1074/100/100" alt="幽灵" class="w-full h-full object-contain filter invert opacity-70">
+</div>
+
+<script>
+  // 移动端菜单切换
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileMenuButton.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    // 切换图标
+    const icon = mobileMenuButton.querySelector('i');
+    if (icon.classList.contains('fa-bars')) {
+      icon.classList.remove('fa-bars');
+      icon.classList.add('fa-times');
+    } else {
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    }
+  });
+
+  // 声音控制
+  const backgroundSound = document.getElementById('background-sound');
+  const jumpScareSound = document.getElementById('jump-scare-sound');
+  const soundToggle = document.getElementById('sound-toggle');
+  const mobileSoundToggle = document.getElementById('mobile-sound-toggle');
+  let soundEnabled = false;
+
+  function toggleSound() {
+    soundEnabled = !soundEnabled;
+    if (soundEnabled) {
+      backgroundSound.volume = 0.2;
+      backgroundSound.play();
+      soundToggle.innerHTML = '<i class="fa fa-volume-up"></i>';
+      mobileSoundToggle.innerHTML = '<i class="fa fa-volume-up mr-2"></i> 声音';
+    } else {
+      backgroundSound.pause();
+      soundToggle.innerHTML = '<i class="fa fa-volume-off"></i>';
+      mobileSoundToggle.innerHTML = '<i class="fa fa-volume-off mr-2"></i> 声音';
+    }
+  }
+
+  soundToggle.addEventListener('click', toggleSound);
+  mobileSoundToggle.addEventListener('click', toggleSound);
+
+  // 平滑滚动
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      // 关闭移动菜单（如果打开）
+      if (!mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+        const icon = mobileMenuButton.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  // 随机惊吓效果
+  const jumpScare = document.getElementById('jump-scare');
+  const lightFlicker = document.getElementById('light-flicker');
+  const ghost = document.getElementById('ghost');
+
+  function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // 随机灯光闪烁
+  function flickerLights() {
+    if (Math.random() > 0.7) { // 30% 概率闪烁
+      lightFlicker.classList.add('animate-flicker');
+      lightFlicker.classList.remove('opacity-0');
+      lightFlicker.classList.add('opacity-100');
+
+      setTimeout(() => {
+        lightFlicker.classList.remove('animate-flicker');
+        lightFlicker.classList.remove('opacity-100');
+        lightFlicker.classList.add('opacity-0');
+      }, randomNumber(2000, 5000));
+    }
+
+    setTimeout(flickerLights, randomNumber(5000, 15000));
+  }
+
+  // 随机显示幽灵
+  function showGhost() {
+    if (Math.random() > 0.8) { // 20% 概率出现
+      const left = randomNumber(10, 90);
+      const top = randomNumber(10, 90);
+      const size = randomNumber(30, 100);
+
+      ghost.style.left = `${left}%`;
+      ghost.style.top = `${top}%`;
+      ghost.style.width = `${size}px`;
+      ghost.style.height = `${size}px`;
+      ghost.style.opacity = '0.6';
+
+      setTimeout(() => {
+        ghost.style.opacity = '0';
+      }, randomNumber(2000, 5000));
+    }
+
+    setTimeout(showGhost, randomNumber(8000, 20000));
+  }
+
+  // 随机惊吓
+  function jumpScareRandom() {
+    // 10% 的概率触发惊吓
+    if (Math.random() > 0.9) {
+      jumpScare.classList.remove('opacity-0');
+      jumpScare.classList.add('opacity-100');
+      jumpScare.classList.remove('pointer-events-none');
+
+      // 播放惊吓音效
+      if (soundEnabled) {
+        jumpScareSound.volume = 0.8;
+        jumpScareSound.play();
+      }
+
+      // 震动效果
+      document.body.classList.add('animate-shake');
+
+      setTimeout(() => {
+        jumpScare.classList.remove('opacity-100');
+        jumpScare.classList.add('opacity-0');
+        jumpScare.classList.add('pointer-events-none');
+        document.body.classList.remove('animate-shake');
+      }, 500);
+    }
+
+    // 随机时间后再次尝试
+    setTimeout(jumpScareRandom, randomNumber(15000, 45000));
+  }
+
+  // 滚动时的元素动画
+  function animateOnScroll() {
+    const elements = document.querySelectorAll('section > div > div > div');
+
+    elements.forEach(element => {
+      const elementTop = element.getBoundingClientRect().top;
+      const elementVisible = 150;
+
+      if (elementTop < window.innerHeight - elementVisible) {
+        element.classList.add('opacity-100');
+        element.classList.remove('opacity-0', 'translate-y-8');
+      }
+    });
+  }
+
+  // 初始化
+  window.addEventListener('scroll', animateOnScroll);
+  window.addEventListener('load', () => {
+    flickerLights();
+    showGhost();
+    jumpScareRandom();
+    animateOnScroll();
+
+    // 延迟启动背景音乐（避免自动播放限制）
+    setTimeout(() => {
+      if (soundEnabled) {
+        backgroundSound.play().catch(e => console.log('自动播放被阻止:', e));
+      }
+    }, 3000);
+  });
+</script>
+</body>
+</html>

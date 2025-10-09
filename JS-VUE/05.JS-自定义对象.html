@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  // let user = {
+  //   name: 'Tom',
+  //   age: 18,
+  //   gender: '男',
+  //   sing: function(){
+  //     alert(this.name + '正在唱歌')
+  //   }
+  // }
+
+  // let user = {
+  //     name: 'Tom',
+  //     age: 18,
+  //     gender: '男',
+  //     sing(){
+  //         alert(this.name + '正在唱歌')
+  //     }
+  // }
+  //
+  // alert(user.name)
+  // user.sing()
+
+  let person = {
+      name: 'itcast',
+      age: 18,
+      gender: '男'
+  }
+  alert(JSON.stringify(person))
+
+  let personJson = '{"name": "heima", "age": 18}';
+  alert(JSON.parse(personJson).name)
+</script>
+
+</body>
+</html>
