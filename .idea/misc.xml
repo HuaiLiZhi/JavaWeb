@@ -10,15 +10,18 @@
         <option value="$PROJECT_DIR$/web-ai-project01/maven-project03/pom.xml" />
         <option value="$PROJECT_DIR$/web-ai-project01/springboot-web-quickstart/pom.xml" />
         <option value="$PROJECT_DIR$/web-ai-project01/aliyun-web-quickstart/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-web-01/pom.xml" />
+        <option value="$PROJECT_DIR$/web-ai-project01/springboot-web-01/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/maven_project/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-web-01/pom.xml" />
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21_PREVIEW" project-jdk-name="21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
