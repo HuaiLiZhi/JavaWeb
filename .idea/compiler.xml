@@ -9,9 +9,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="maven-project01" />
         <module name="maven-project02" />
-        <module name="springboot-web-01" />
         <module name="maven-project03" />
+        <module name="jdbc-demo" />
         <module name="springboot-web-quickstart" />
+        <module name="springboot-web-01" />
         <module name="aliyun-web-quickstart" />
       </profile>
     </annotationProcessing>
