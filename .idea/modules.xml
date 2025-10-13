@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/java_web_code.iml" filepath="$PROJECT_DIR$/.idea/java_web_code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-ai-project01/springboot-web-01/src/main/main.iml" filepath="$PROJECT_DIR$/web-ai-project01/springboot-web-01/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-ai-project01/springboot-web-01/src/test/test.iml" filepath="$PROJECT_DIR$/web-ai-project01/springboot-web-01/src/test/test.iml" />
       <module fileurl="file://$PROJECT_DIR$/web-ai-project01/web-ai-project01.iml" filepath="$PROJECT_DIR$/web-ai-project01/web-ai-project01.iml" />
     </modules>
   </component>
