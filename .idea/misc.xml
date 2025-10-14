@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/springboot-web-01/pom.xml" />
         <option value="$PROJECT_DIR$/web-ai-project01/springboot-web-01/pom.xml" />
         <option value="$PROJECT_DIR$/web-ai-project01/jdbc-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/web-ai-project01/springboot-mybatis-quickstart/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -15,6 +15,15 @@
         <module name="springboot-web-01" />
         <module name="aliyun-web-quickstart" />
       </profile>
+      <profile name="Annotation profile for springboot-mybatis-quickstart" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../apache-maven-3.9.5-bin/apache-maven-3.9.5/maven_base/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="springboot-mybatis-quickstart" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="maven_project" target="1.8" />
@@ -22,6 +31,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springboot-mybatis-quickstart" options="-parameters" />
       <module name="springboot-web-01" options="-parameters" />
       <module name="springboot-web-quickstart" options="-parameters" />
     </option>
