@@ -4,10 +4,7 @@ import com.huailizhi.pojo.Dept;
 import com.huailizhi.pojo.Result;
 import com.huailizhi.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,24 @@ public class DeptController {
         System.out.println("查询全部部门数据");
         List<Dept> deptList = deptService.findAll();
         return Result.success(deptList);
+    }
+
+    @DeleteMapping(value = "/depts")
+    public Result deleteById(Integer id){
+        System.out.println("根据ID删除部门：" + id);
+        deptService.deleteById(id);
+        return Result.success();
+    }
+
+    @PostMapping(value = "/depts")
+    public Result insert(@RequestBody Dept dept){
+        System.out.println("插入部门数据：" + dept);
+        deptService.insert(dept);
+        return Result.success();
+    }
+
+    @GetMapping(value = "/dept/1")
+    public Result findById(Integer id){
+        System.out.println("查询id为"+ id +"的部门数据");
     }
 }
