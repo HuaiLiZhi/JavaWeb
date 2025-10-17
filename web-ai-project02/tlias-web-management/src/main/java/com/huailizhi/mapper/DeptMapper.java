@@ -22,4 +22,10 @@ public interface DeptMapper {
 
     @Insert("insert into dept(name, create_time, update_time) VALUES (#{name}, #{createTime}, #{updateTime})")
     void insert(Dept dept);
+
+    @Select("select id, name, create_time, update_time from dept where id = #{id};")
+    Dept findById(Integer id);
+
+    @Update("update dept set name = #{name} , update_time = #{updateTime} where id = #{id}")
+    void updateById(Dept dept);
 }

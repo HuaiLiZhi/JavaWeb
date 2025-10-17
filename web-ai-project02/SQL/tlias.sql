@@ -22,5 +22,9 @@ select id, name, create_time, update_time from dept order by update_time desc;
 
 delete from dept where id;
 
-insert into dept(id, name, create_time, update_time) VALUES ()
+insert into dept(id, name, create_time, update_time) VALUES ();
+
+select id, name, create_time, update_time from dept where id;
+
+update dept set name = '' , update_time = '' where id;
 
