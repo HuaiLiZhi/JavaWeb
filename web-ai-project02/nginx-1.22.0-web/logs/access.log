@@ -103,3 +103,5 @@
 127.0.0.1 - - [17/Oct/2025:15:48:57 +0800] "GET /api/depts HTTP/1.1" 200 635 "http://localhost:90/dept" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"
 127.0.0.1 - - [17/Oct/2025:15:50:29 +0800] "GET /dept HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"
 127.0.0.1 - - [17/Oct/2025:15:50:30 +0800] "GET /api/depts HTTP/1.1" 200 635 "http://localhost:90/dept" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"
+127.0.0.1 - - [18/Oct/2025:19:58:54 +0800] "GET /api/emps?name=&gender=&begin=&end=&page=1&pageSize=10 HTTP/1.1" 404 555 "http://localhost:90/emp" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"
+127.0.0.1 - - [18/Oct/2025:19:58:54 +0800] "GET /api/depts HTTP/1.1" 404 555 "http://localhost:90/emp" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"

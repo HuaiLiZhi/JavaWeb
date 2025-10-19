@@ -18,13 +18,15 @@ INSERT INTO dept VALUES (1,'学工部','2024-09-25 09:47:40','2024-09-25 09:47:4
 
 
 
-select id, name, create_time, update_time from dept order by update_time desc;
+# select id, name, create_time, update_time from dept order by update_time desc;
+#
+# delete from dept where id;
+#
+# insert into dept(id, name, create_time, update_time) VALUES ();
+#
+# select id, name, create_time, update_time from dept where id;
+#
+# update dept set name = '' , update_time = '' where id;
 
-delete from dept where id;
 
-insert into dept(id, name, create_time, update_time) VALUES ();
-
-select id, name, create_time, update_time from dept where id;
-
-update dept set name = '' , update_time = '' where id;
 
