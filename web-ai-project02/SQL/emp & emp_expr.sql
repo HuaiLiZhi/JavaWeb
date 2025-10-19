@@ -1,34 +1,3 @@
-create database tlias;
-
-use tlias;
-
-CREATE TABLE dept (
-  id int unsigned PRIMARY KEY AUTO_INCREMENT COMMENT 'ID, 主键',
-  name varchar(10) NOT NULL UNIQUE COMMENT '部门名称',
-  create_time datetime DEFAULT NULL COMMENT '创建时间',
-  update_time datetime DEFAULT NULL COMMENT '修改时间'
-) COMMENT '部门表';
-
-INSERT INTO dept VALUES (1,'学工部','2024-09-25 09:47:40','2024-09-25 09:47:40'),
-                      (2,'教研部','2024-09-25 09:47:40','2024-09-09 15:17:04'),
-                      (3,'咨询部','2024-09-25 09:47:40','2024-09-30 21:26:24'),
-                      (4,'就业部','2024-09-25 09:47:40','2024-09-25 09:47:40'),
-                      (5,'人事部','2024-09-25 09:47:40','2024-09-25 09:47:40'),
-                      (6,'行政部','2024-11-30 20:56:37','2024-09-30 20:56:37');
-
-
-
-# select id, name, create_time, update_time from dept order by update_time desc;
-#
-# delete from dept where id;
-#
-# insert into dept(id, name, create_time, update_time) VALUES ();
-#
-# select id, name, create_time, update_time from dept where id;
-#
-# update dept set name = '' , update_time = '' where id;
-
-
 -- 员工表
 create table emp(
     id int unsigned primary key auto_increment comment 'ID,主键',
@@ -47,7 +16,7 @@ create table emp(
 ) comment '员工表';
 
 
-INSERT INTO emp VALUES
+INSERT INTO emp VALUES 
 (1,'shinaian','123456','施耐庵',1,'13309090001',4,15000,'https://web-framework.oss-cn-hangzhou.aliyuncs.com/2023/1.jpg','2000-01-01',2,'2023-10-20 16:35:33','2023-11-16 16:11:26'),
 (2,'songjiang','123456','宋江',1,'13309090002',2,8600,'https://web-framework.oss-cn-hangzhou.aliyuncs.com/2023/1.jpg','2015-01-01',2,'2023-10-20 16:35:33','2023-10-20 16:35:37'),
 (3,'lujunyi','123456','卢俊义',1,'13309090003',2,8900,'https://web-framework.oss-cn-hangzhou.aliyuncs.com/2023/1.jpg','2008-05-01',2,'2023-10-20 16:35:33','2023-10-20 16:35:39'),
@@ -89,14 +58,5 @@ create table emp_expr(
     company varchar(50) comment '公司名称',
     job varchar(50) comment '职位'
 )comment '工作经历';
-
-
--- 员工部门信息
-select e.*, d.name from emp e left join dept d on e.dept_id = d.id;
-
-select e.*, d.name from emp e left join dept d on e.dept_id = d.id limit 0, 5;
-
--- 员工数量
-select count(*) from emp e left join dept d on e.dept_id = d.id;
 
 
