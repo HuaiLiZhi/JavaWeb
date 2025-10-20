@@ -2,9 +2,11 @@ package com.huailizhi.mapper;
 
 
 import com.huailizhi.pojo.Emp;
+import com.huailizhi.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /*
@@ -20,8 +22,7 @@ public interface EmpMapper {
 //            "order by e.update_time desc limit #{start}, #{pageSize}")
 //    List<Emp> getRows(Integer start, Integer pageSize);
 
-    @Select("select e.*, d.name deptName from emp e left join dept d on e.dept_id = d.id order by e.update_time desc")
-    List<Emp> list();
+    List<Emp> list(EmpQueryParam empQueryParam);
 
 
 }

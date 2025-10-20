@@ -99,4 +99,10 @@ select e.*, d.name from emp e left join dept d on e.dept_id = d.id limit 0, 5;
 -- 员工数量
 select count(*) from emp e left join dept d on e.dept_id = d.id;
 
+-- 条件查询
+select e.*, d.name
+from emp e left join dept d on e.dept_id = d.id
+where e.name like '%%' and gender = 1 and entry_date between '' and ''
+order by update_time desc;
+
 
