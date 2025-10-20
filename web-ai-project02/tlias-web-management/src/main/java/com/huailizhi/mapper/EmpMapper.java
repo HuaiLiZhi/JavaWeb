@@ -13,10 +13,15 @@ import java.util.List;
 @Mapper
 public interface EmpMapper {
 
-    @Select("select count(*) from emp e left join dept d on e.dept_id = d.id")
-    Long getTotal();
+//    @Select("select count(*) from emp e left join dept d on e.dept_id = d.id")
+//    Long getTotal();
+//
+//    @Select("select e.*, d.name deptName from emp e left join dept d on e.dept_id = d.id " +
+//            "order by e.update_time desc limit #{start}, #{pageSize}")
+//    List<Emp> getRows(Integer start, Integer pageSize);
 
-    @Select("select e.*, d.name deptName from emp e left join dept d on e.dept_id = d.id " +
-            "order by e.update_time desc limit #{start}, #{pageSize}")
-    List<Emp> getRows(Integer start, Integer pageSize);
+    @Select("select e.*, d.name deptName from emp e left join dept d on e.dept_id = d.id order by e.update_time desc")
+    List<Emp> list();
+
+
 }
