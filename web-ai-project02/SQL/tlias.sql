@@ -91,18 +91,29 @@ create table emp_expr(
 )comment '工作经历';
 
 
--- 员工部门信息
-select e.*, d.name from emp e left join dept d on e.dept_id = d.id;
+# -- 员工部门信息
+# select e.*, d.name from emp e left join dept d on e.dept_id = d.id;
+#
+# select e.*, d.name from emp e left join dept d on e.dept_id = d.id limit 0, 5;
+#
+# -- 员工数量
+# select count(*) from emp e left join dept d on e.dept_id = d.id;
+#
+# -- 条件查询
+# select e.*, d.name
+# from emp e left join dept d on e.dept_id = d.id
+# where e.name like '%%' and gender = 1 and entry_date between '' and ''
+# order by update_time desc;
 
-select e.*, d.name from emp e left join dept d on e.dept_id = d.id limit 0, 5;
 
--- 员工数量
-select count(*) from emp e left join dept d on e.dept_id = d.id;
+start transaction ;
 
--- 条件查询
-select e.*, d.name
-from emp e left join dept d on e.dept_id = d.id
-where e.name like '%%' and gender = 1 and entry_date between '' and ''
-order by update_time desc;
+insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time)
+values ();
 
+insert into emp_expr(emp_id, begin, end, company, job)
+values ();
 
+commit ;
+
+rollback ;

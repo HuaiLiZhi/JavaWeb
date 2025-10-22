@@ -2,15 +2,17 @@ package com.huailizhi.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.huailizhi.mapper.EmpExprMapper;
 import com.huailizhi.mapper.EmpMapper;
-import com.huailizhi.pojo.Emp;
-import com.huailizhi.pojo.EmpQueryParam;
-import com.huailizhi.pojo.PageResult;
+import com.huailizhi.pojo.*;
+import com.huailizhi.service.EmpLogService;
 import com.huailizhi.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,13 +21,11 @@ public class EmpServiceImpl implements EmpService {
     @Autowired
     private EmpMapper empMapper;
 
-//    @Override
-//    public PageResult<Emp> getPageResult(Integer page, Integer pageSize) {
-//        Long total = empMapper.getTotal();
-//        Integer start = (page - 1) * pageSize;
-//        List<Emp> rows = empMapper.getRows(start, pageSize);
-//        return new PageResult<>(total, rows);
-//    }
+    @Autowired
+    private EmpExprMapper empExprMapper;
+
+    @Autowired
+    private EmpLogService empLogService;
 
     @Override
     public PageResult<Emp> getPageResult(EmpQueryParam empQueryParam) {
@@ -36,5 +36,30 @@ public class EmpServiceImpl implements EmpService {
         Page<Emp> p = (Page<Emp>) empList;
 
         return new PageResult<Emp>(p.getTotal(), p.getResult());
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void save(Emp emp) {
+        try {
+            emp.setCreateTime(LocalDateTime.now());
+            emp.setUpdateTime(LocalDateTime.now());
+            empMapper.insert(emp);
+
+            int i = 1 / 0;
+
+            List<EmpExpr> exprList = emp.getExprList();
+            if (!exprList.isEmpty()){
+                for (EmpExpr empExpr : exprList) {
+                    empExpr.setEmpId(emp.getId());
+                }
+                empExprMapper.insertBatch(exprList);
+            }
+        } finally {
+            // 记录操作日志
+            EmpLog empLog = new EmpLog(null, LocalDateTime.now(), "新增员工" + emp);
+            empLogService.insertLog(empLog);
+        }
+
     }
 }

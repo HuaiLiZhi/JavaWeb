@@ -11,4 +11,5 @@ public interface EmpService {
 //    PageResult<Emp> getPageResult(String name, Integer gender, LocalDate begin, LocalDate end, Integer page, Integer pageSize);
     PageResult<Emp> getPageResult(EmpQueryParam empQueryParam);
 
+    void save(Emp emp);
 }
