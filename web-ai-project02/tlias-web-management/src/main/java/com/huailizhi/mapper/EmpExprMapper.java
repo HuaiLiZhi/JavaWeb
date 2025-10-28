@@ -15,4 +15,6 @@ public interface EmpExprMapper {
     * */
 
     void insertBatch(@Param("exprList") List<EmpExpr> exprList);
+
+    void deleteByEmpIds(List<Integer> empIds);
 }

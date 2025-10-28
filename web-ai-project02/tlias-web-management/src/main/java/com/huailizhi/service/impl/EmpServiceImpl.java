@@ -10,9 +10,12 @@ import com.huailizhi.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -46,8 +49,6 @@ public class EmpServiceImpl implements EmpService {
             emp.setUpdateTime(LocalDateTime.now());
             empMapper.insert(emp);
 
-            int i = 1 / 0;
-
             List<EmpExpr> exprList = emp.getExprList();
             if (!exprList.isEmpty()){
                 for (EmpExpr empExpr : exprList) {
@@ -61,5 +62,35 @@ public class EmpServiceImpl implements EmpService {
             empLogService.insertLog(empLog);
         }
 
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void delete(List<Integer> ids) {
+        //批量删除员工基本信息
+        empMapper.deleteById(ids);
+
+        //批量删除员工工作经历信息
+        empExprMapper.deleteByEmpIds(ids);
+    }
+
+    @Override
+    public Emp getInfo(Integer id) {
+        return empMapper.getById(id);
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void update(Emp emp) {
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateById(emp);
+
+        empExprMapper.deleteByEmpIds(Collections.singletonList(emp.getId()));
+
+        List<EmpExpr> exprList = emp.getExprList();
+        if (!CollectionUtils.isEmpty(exprList)) {
+            exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
+            empExprMapper.insertBatch(exprList);
+        }
     }
 }
