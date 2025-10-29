@@ -7,7 +7,7 @@
     <!--
     班级列表数据的条件分页查询
     -->
-    <select id="list" resultType="com.huailizhi.pojo.Clazz">
+    <select id="getPageResult" resultType="com.huailizhi.pojo.Clazz">
         select clazz.*, emp.name masterName
         from clazz left join emp on clazz.master_id = emp.id
         <where>
@@ -28,4 +28,18 @@
         insert into clazz(name, room, begin_date, end_date, master_id, subject, create_time, update_time)
         values(#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{subject}, #{createTime}, #{updateTime})
     </insert>
+
+    <update id="updateClazzById">
+        update clazz
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="room != null">room = #{room},</if>
+            <if test="beginDate != null">begin_date = #{beginDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="masterId != null">master_id = #{masterId},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

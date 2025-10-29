@@ -27,4 +27,10 @@ public class GlobalExceptionHandler {
         String[] arr = errMsg.split(" ");
         return Result.error(arr[2] + "已存在");
     }
+
+    @ExceptionHandler(ClazzHasStudentsException.class)
+    public Result handleClassHasStudentsException(ClazzHasStudentsException e){
+        log.error("程序出错了", e);
+        return Result.error("班级有学生，不能删除");
+    }
 }

@@ -23,9 +23,9 @@ public class ClazzController {
     * 分页查询班级数据
     * */
     @GetMapping
-    public Result list(ClazzQueryParam clazzQueryParam){
+    public Result getPageResult(ClazzQueryParam clazzQueryParam){
         log.info("分页查询班级数据");
-        PageResult<Clazz> pageResult = clazzService.list(clazzQueryParam);
+        PageResult<Clazz> pageResult = clazzService.getPageResult(clazzQueryParam);
         return Result.success(pageResult);
     }
 
@@ -49,7 +49,37 @@ public class ClazzController {
         return Result.success(clazz);
     }
 
+    /*
+    * 修改班级数据
+    * */
+    @PutMapping
+    public Result updateClazzById(@RequestBody Clazz clazz){
+        log.info("修改id为{}的班级数据", clazz.getId());
+        clazzService.updateClazzById(clazz);
+        return Result.success();
+    }
 
+
+    /*
+    * 删除班级数据
+    * */
+    @DeleteMapping("/{id}")
+    public Result deleteClazzById(@PathVariable Integer id){
+        log.info("删除id为{}的班级数据", id);
+        clazzService.deleteClazzById(id);
+        return Result.success();
+    }
+
+
+    /*
+    * 查询所有班级数据
+    * */
+    @GetMapping("/list")
+    public Result list(){
+        log.info("查询所有班级数据");
+        List<Clazz> clazzList = clazzService.list();
+        return Result.success(clazzList);
+    }
 
 
 }
