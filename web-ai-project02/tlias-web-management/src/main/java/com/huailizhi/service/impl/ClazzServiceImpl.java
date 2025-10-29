@@ -10,6 +10,8 @@ import com.huailizhi.service.ClazzService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,6 +25,19 @@ public class ClazzServiceImpl implements ClazzService {
         PageHelper.startPage(clazzQueryParam.getPage(), clazzQueryParam.getPageSize());
 
         List<Clazz> clazzList = clazzMapper.list(clazzQueryParam);
+
+        LocalDate now = LocalDate.now();
+        for (Clazz clazz : clazzList) {
+            LocalDate beginDate = clazz.getBeginDate();
+            LocalDate endDate = clazz.getEndDate();
+            if (now.isBefore(beginDate)){
+                clazz.setStatus("未开班");
+            } else if (now.isAfter(beginDate) && now.isBefore(endDate)) {
+                clazz.setStatus("已开班");
+            } else {
+                clazz.setStatus("已结课");
+            }
+        }
 
         Page<Clazz> p = (Page<Clazz>) clazzList;
 
