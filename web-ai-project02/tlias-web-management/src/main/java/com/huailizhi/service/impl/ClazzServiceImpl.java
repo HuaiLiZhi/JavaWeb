@@ -43,4 +43,16 @@ public class ClazzServiceImpl implements ClazzService {
 
         return new PageResult<>(p.getTotal(), p.getResult());
     }
+
+    @Override
+    public void addClazz(Clazz clazz) {
+        clazz.setCreateTime(LocalDateTime.now());
+        clazz.setUpdateTime(LocalDateTime.now());
+        clazzMapper.addClazz(clazz);
+    }
+
+    @Override
+    public Clazz getClazzById(Integer id) {
+        return clazzMapper.getClazzById(id);
+    }
 }

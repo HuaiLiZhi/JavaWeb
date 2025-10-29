@@ -25,7 +25,7 @@ public interface EmpMapper {
     /*
     * 查询员工信息
     * */
-    List<Emp> list(EmpQueryParam empQueryParam);
+    List<Emp> getPageResult(EmpQueryParam empQueryParam);
 
 
     /*
@@ -61,4 +61,7 @@ public interface EmpMapper {
     * 查询员工性别数量
     * */
     List<Map<String, Object>> countEmpGenderData();
+
+    @Select("select * from emp")
+    List<Emp> list();
 }

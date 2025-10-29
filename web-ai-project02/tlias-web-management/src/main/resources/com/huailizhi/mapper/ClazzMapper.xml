@@ -8,19 +8,24 @@
     班级列表数据的条件分页查询
     -->
     <select id="list" resultType="com.huailizhi.pojo.Clazz">
-        select *
-        from clazz
+        select clazz.*, emp.name masterName
+        from clazz left join emp on clazz.master_id = emp.id
         <where>
             <if test="name != null and name != ''">
-                name like concat('%', #{name}, '%')
+                clazz.name like concat('%', #{name}, '%')
             </if>
             <if test="begin != null">
-                and begin_date >= #{begin}
+                and clazz.begin_date >= #{begin}
             </if>
             <if test="end != null">
-                and #{end} >= end_date
+                and #{end} >= clazz.end_date
             </if>
         </where>
         order by update_time desc
     </select>
+
+    <insert id="addClazz">
+        insert into clazz(name, room, begin_date, end_date, master_id, subject, create_time, update_time)
+        values(#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{subject}, #{createTime}, #{updateTime})
+    </insert>
 </mapper>

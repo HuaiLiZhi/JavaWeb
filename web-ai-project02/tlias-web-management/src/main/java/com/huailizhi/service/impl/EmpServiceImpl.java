@@ -34,7 +34,7 @@ public class EmpServiceImpl implements EmpService {
     public PageResult<Emp> getPageResult(EmpQueryParam empQueryParam) {
         PageHelper.startPage(empQueryParam.getPage(), empQueryParam.getPageSize());
 
-        List<Emp> empList = empMapper.list(empQueryParam);
+        List<Emp> empList = empMapper.getPageResult(empQueryParam);
 
         Page<Emp> p = (Page<Emp>) empList;
 
@@ -92,5 +92,10 @@ public class EmpServiceImpl implements EmpService {
             exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
             empExprMapper.insertBatch(exprList);
         }
+    }
+
+    @Override
+    public List<Emp> list() {
+        return empMapper.list();
     }
 }

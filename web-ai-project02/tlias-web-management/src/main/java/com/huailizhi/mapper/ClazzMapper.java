@@ -11,4 +11,9 @@ import java.util.List;
 public interface ClazzMapper {
 
     List<Clazz> list(ClazzQueryParam clazzQueryParam);
+
+    void addClazz(Clazz clazz);
+
+    @Select("select * from clazz where id = #{id}")
+    Clazz getClazzById(Integer id);
 }
