@@ -2,6 +2,7 @@ package com.huailizhi.controller;
 
 import com.huailizhi.pojo.JobOption;
 import com.huailizhi.pojo.Result;
+import com.huailizhi.pojo.StudentCount;
 import com.huailizhi.service.ReportService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,5 +42,20 @@ public class ReportController {
         log.info("查询员工性别数量");
         List<Map<String, Object>> genderList = reportService.getEmpGenderData();
         return Result.success(genderList);
+    }
+
+
+    @GetMapping("/studentCountData")
+    public Result getClazzCountData(){
+        log.info("查询学生数量");
+        Map<String, Object> studentCount = reportService.getStudentCountData();
+        return Result.success(studentCount);
+    }
+
+    @GetMapping("/studentDegreeData")
+    public Result getDegreeCountData(){
+        log.info("查询学生学历数量");
+        List<Map<String, Object>> degreeCount = reportService.getDegreeCount();
+        return Result.success(degreeCount);
     }
 }

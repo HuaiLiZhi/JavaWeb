@@ -55,4 +55,11 @@ public class StudentController {
         studentService.deleteStudentsByIds(ids);
         return Result.success();
     }
+
+    @PutMapping("/violation/{id}/{score}")
+    public Result violation(@PathVariable Integer id, @PathVariable Short score){
+        log.info("学生id为{}的学生违纪扣分{}分", id, score);
+        studentService.violation(id, score);
+        return Result.success();
+    }
 }

@@ -231,3 +231,22 @@ INSERT INTO student VALUES (1,'段誉','2022000001',1,'18800000001','11012000030
 
 
 select * from clazz;
+
+
+select c.name clazzName, count(s.id) studentCount
+from clazz c left join student s on c.id = s.clazz_id
+group by c.id
+order by studentCount desc;
+
+
+select( case
+    when degree = 1 then '初中'
+    when degree = 2 then '高中'
+    when degree = 3 then '大专'
+    when degree = 4 then '本科'
+    when degree = 5 then '硕士'
+    when degree = 6 then '博士' end
+          ) degree_name,
+    count(*) degree_count
+from student s
+group by degree;

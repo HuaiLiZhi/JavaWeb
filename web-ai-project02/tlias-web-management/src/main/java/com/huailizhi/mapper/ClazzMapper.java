@@ -2,10 +2,11 @@ package com.huailizhi.mapper;
 
 import com.huailizhi.pojo.Clazz;
 import com.huailizhi.pojo.ClazzQueryParam;
+import com.huailizhi.pojo.StudentCount;
+import com.huailizhi.pojo.DegreeCount;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -29,4 +30,8 @@ public interface ClazzMapper {
 
     @Select("select * from clazz")
     List<Clazz> list();
+
+    List<StudentCount> countEveryClazz();
+
+    List<DegreeCount> countEveryDegree();
 }

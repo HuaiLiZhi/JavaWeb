@@ -9,4 +9,8 @@ public interface ReportService {
     JobOption getEmpJobData();
 
     List<Map<String, Object>> getEmpGenderData();
+
+    Map<String, Object> getStudentCountData();
+
+    List<Map<String, Object>> getDegreeCount();
 }
