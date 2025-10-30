@@ -2,6 +2,7 @@ package com.huailizhi.service;
 
 import com.huailizhi.pojo.Emp;
 import com.huailizhi.pojo.EmpQueryParam;
+import com.huailizhi.pojo.LogInfo;
 import com.huailizhi.pojo.PageResult;
 
 import java.time.LocalDate;
@@ -21,4 +22,6 @@ public interface EmpService {
     void update(Emp emp);
 
     List<Emp> list();
+
+    LogInfo login(Emp emp);
 }

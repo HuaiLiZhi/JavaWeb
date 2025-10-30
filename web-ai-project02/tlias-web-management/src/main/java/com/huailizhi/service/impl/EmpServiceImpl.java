@@ -7,6 +7,7 @@ import com.huailizhi.mapper.EmpMapper;
 import com.huailizhi.pojo.*;
 import com.huailizhi.service.EmpLogService;
 import com.huailizhi.service.EmpService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmpServiceImpl implements EmpService {
 
@@ -97,5 +99,17 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public List<Emp> list() {
         return empMapper.list();
+    }
+
+    @Override
+    public LogInfo login(Emp emp) {
+        Emp e = empMapper.selectByUsernameAndPassword(emp);
+
+        if (e != null){
+            log.info("员工登录成功：{}", e);
+            return new LogInfo(e.getId(), e.getUsername(), e.getName(), "");
+        }
+
+        return null;
     }
 }
