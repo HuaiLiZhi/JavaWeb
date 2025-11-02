@@ -7,6 +7,7 @@ import com.huailizhi.mapper.EmpMapper;
 import com.huailizhi.pojo.*;
 import com.huailizhi.service.EmpLogService;
 import com.huailizhi.service.EmpService;
+import com.huailizhi.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -107,7 +106,14 @@ public class EmpServiceImpl implements EmpService {
 
         if (e != null){
             log.info("员工登录成功：{}", e);
-            return new LogInfo(e.getId(), e.getUsername(), e.getName(), "");
+
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", e.getId());
+            claims.put("username", e.getUsername());
+
+            String jwt = JwtUtils.generateJwt(claims);
+
+            return new LogInfo(e.getId(), e.getUsername(), e.getName(), jwt);
         }
 
         return null;
