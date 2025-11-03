@@ -1,30 +1,24 @@
-package com.huailizhi.filter;
+package com.huailizhi.interceptor;
 
 import com.huailizhi.utils.JwtUtils;
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Slf4j
-//@WebFilter(urlPatterns = "/*")
-public class TokenFilter implements Filter {
+@Component
+public class TokenInterceptor implements HandlerInterceptor {
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //获取请求路径
         String path = request.getServletPath(); // /login
 
         //判断是否是登录请求，如果是则放行
         if ("/login".equals(path)){
             log.info("登录请求：{}", path);
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
+            return true;
         }
 
         //获取请求头的token
@@ -34,7 +28,7 @@ public class TokenFilter implements Filter {
         if (token == null || token.isEmpty()){
             log.info("用户未登录，请先登录");
             response.setStatus(401);
-            return;
+            return false;
         }
 
         //如果token存在，校验令牌，如果校验失败返回401
@@ -43,12 +37,11 @@ public class TokenFilter implements Filter {
         } catch (Exception e){
             log.info("令牌校验失败");
             response.setStatus(401);
-            return;
+            return false;
         }
 
         //校验通过，放行
         log.info("令牌校验通过");
-        filterChain.doFilter(servletRequest, servletResponse);
-
+        return true;
     }
 }
