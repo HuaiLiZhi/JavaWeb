@@ -1,5 +1,6 @@
 package com.huailizhi.controller;
 
+import com.huailizhi.anno.Log;
 import com.huailizhi.pojo.Clazz;
 import com.huailizhi.pojo.ClazzQueryParam;
 import com.huailizhi.pojo.PageResult;
@@ -32,6 +33,7 @@ public class ClazzController {
     /*
     * 添加班级数据
     * */
+    @Log
     @PostMapping
     public Result addClazz(@RequestBody Clazz clazz){
         log.info("添加班级数据：{}", clazz);
@@ -52,6 +54,7 @@ public class ClazzController {
     /*
     * 修改班级数据
     * */
+    @Log
     @PutMapping
     public Result updateClazzById(@RequestBody Clazz clazz){
         log.info("修改id为{}的班级数据", clazz.getId());
@@ -63,6 +66,7 @@ public class ClazzController {
     /*
     * 删除班级数据
     * */
+    @Log
     @DeleteMapping("/{id}")
     public Result deleteClazzById(@PathVariable Integer id){
         log.info("删除id为{}的班级数据", id);

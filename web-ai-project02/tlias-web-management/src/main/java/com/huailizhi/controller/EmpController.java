@@ -1,5 +1,6 @@
 package com.huailizhi.controller;
 
+import com.huailizhi.anno.Log;
 import com.huailizhi.pojo.Emp;
 import com.huailizhi.pojo.EmpQueryParam;
 import com.huailizhi.pojo.PageResult;
@@ -7,11 +8,8 @@ import com.huailizhi.pojo.Result;
 import com.huailizhi.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -39,6 +37,7 @@ public class EmpController {
     /*
     * 新增员工
     * */
+    @Log
     @PostMapping
     public Result save(@RequestBody Emp emp){
         log.info("新增员工:{}", emp);
@@ -56,6 +55,7 @@ public class EmpController {
     /*
     * 批量删除员工
     * */
+    @Log
     @DeleteMapping
     public Result delete(@RequestParam List<Integer> ids){
         log.info("删除员工：{}", ids);
@@ -77,6 +77,7 @@ public class EmpController {
     /*
     * 修改员工信息
     * */
+    @Log
     @PutMapping
     public Result update(@RequestBody Emp emp){
         log.info("修改员工信息：{}", emp);

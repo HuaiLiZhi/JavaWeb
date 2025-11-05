@@ -1,6 +1,9 @@
 package com.huailizhi.interceptor;
 
+import com.huailizhi.pojo.LogInfo;
+import com.huailizhi.utils.BaseContext;
 import com.huailizhi.utils.JwtUtils;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +36,13 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         //如果token存在，校验令牌，如果校验失败返回401
         try {
-            JwtUtils.parseJWT(token);
+            Claims claims = JwtUtils.parseJWT(token);
+            // 将用户信息存储到ThreadLocal中
+            LogInfo logInfo = new LogInfo();
+            logInfo.setId((Integer) claims.get("id"));
+            logInfo.setUsername((String) claims.get("username"));
+            logInfo.setName((String) claims.get("name"));
+            BaseContext.setCurrentLogInfo(logInfo);
         } catch (Exception e){
             log.info("令牌校验失败");
             response.setStatus(401);
@@ -43,5 +52,11 @@ public class TokenInterceptor implements HandlerInterceptor {
         //校验通过，放行
         log.info("令牌校验通过");
         return true;
+    }
+    
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        // 清理ThreadLocal中的用户信息，防止内存泄漏
+        BaseContext.removeCurrentLogInfo();
     }
 }

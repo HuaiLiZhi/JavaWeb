@@ -1,11 +1,10 @@
 package com.huailizhi.controller;
 
+import com.huailizhi.anno.Log;
 import com.huailizhi.pojo.Dept;
 import com.huailizhi.pojo.Result;
 import com.huailizhi.service.DeptService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +28,7 @@ public class DeptController {
         return Result.success(deptList);
     }
 
+    @Log
     @DeleteMapping
     public Result deleteById(Integer id){
         log.info("根据ID删除部门：{}", id);
@@ -36,6 +36,7 @@ public class DeptController {
         return Result.success();
     }
 
+    @Log
     @PostMapping
     public Result insert(@RequestBody Dept dept){
         log.info("插入部门数据：{}", dept);
@@ -50,6 +51,7 @@ public class DeptController {
         return Result.success(dept);
     }
 
+    @Log
     @PutMapping
     public Result updateById(@RequestBody Dept dept){
         log.info("更新id为{}的部门数据", dept.getId());

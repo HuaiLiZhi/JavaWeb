@@ -1,5 +1,6 @@
 package com.huailizhi.controller;
 
+import com.huailizhi.anno.Log;
 import com.huailizhi.pojo.PageResult;
 import com.huailizhi.pojo.Result;
 import com.huailizhi.pojo.Student;
@@ -26,6 +27,7 @@ public class StudentController {
         return Result.success(studentList);
     }
 
+    @Log
     @PostMapping
     public Result addStudent(@RequestBody Student student){
         log.info("添加学生数据：{}", student);
@@ -41,6 +43,7 @@ public class StudentController {
     }
 
 
+    @Log
     @PutMapping
     public Result updateStudentById(@RequestBody Student student){
         log.info("修改id为{}的学生数据", student.getId());
@@ -49,6 +52,7 @@ public class StudentController {
     }
 
 
+    @Log
     @DeleteMapping("/{ids}")
     public Result deleteStudentsByIds(@PathVariable List<Integer> ids){
         log.info("删除id为{}的学生数据", ids);
@@ -56,6 +60,7 @@ public class StudentController {
         return Result.success();
     }
 
+    @Log
     @PutMapping("/violation/{id}/{score}")
     public Result violation(@PathVariable Integer id, @PathVariable Short score){
         log.info("学生id为{}的学生违纪扣分{}分", id, score);
