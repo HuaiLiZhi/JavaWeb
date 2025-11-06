@@ -1,0 +1,5 @@
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucket-name: java-ai-huilizhi
+    region: cn-beijing
