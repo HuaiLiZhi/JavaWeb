@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huailizhi.mapper.ClazzMapper">
+
+    <!--
+    班级列表数据的条件分页查询
+    -->
+    <select id="getPageResult" resultType="com.huailizhi.pojo.Clazz">
+        select clazz.*, emp.name masterName
+        from clazz left join emp on clazz.master_id = emp.id
+        <where>
+            <if test="name != null and name != ''">
+                clazz.name like concat('%', #{name}, '%')
+            </if>
+            <if test="begin != null">
+                and clazz.begin_date >= #{begin}
+            </if>
+            <if test="end != null">
+                and #{end} >= clazz.end_date
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+
+    <insert id="addClazz">
+        insert into clazz(name, room, begin_date, end_date, master_id, subject, create_time, update_time)
+        values(#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{subject}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="updateClazzById">
+        update clazz
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="room != null">room = #{room},</if>
+            <if test="beginDate != null">begin_date = #{beginDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="masterId != null">master_id = #{masterId},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="countEveryClazz" resultType="com.huailizhi.pojo.StudentCount">
+        select c.name clazz_name, count(s.id) student_count
+        from clazz c left join student s on c.id = s.clazz_id
+        group by c.id
+        order by student_count desc;
+    </select>
+
+    <select id="countEveryDegree" resultType="com.huailizhi.pojo.DegreeCount">
+        select( case
+                    when degree = 1 then '初中'
+                    when degree = 2 then '高中'
+                    when degree = 3 then '大专'
+                    when degree = 4 then '本科'
+                    when degree = 5 then '硕士'
+                    when degree = 6 then '博士' end
+                  ) degree_name,
+              count(*) degree_count
+        from student s
+        group by degree;
+    </select>
+</mapper>
