@@ -50,15 +50,57 @@
   <el-pagination
       v-model:current-page="currentPage4"
       v-model:page-size="pageSize4"
-      :page-sizes="[100, 200, 300, 400]"
+      :page-sizes="[10, 20, 30, 40]"
       :size="size"
-      :disabled="disabled"
       :background="background"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400"
+      :total="total"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
   />
+
+<!--  按钮-->
+  <el-button class="!ml-0" plain @click="dialogTableVisible = true">
+    Open a Table nested Dialog
+  </el-button>
+
+  <el-dialog v-model="dialogTableVisible" title="收获地址" width="800">
+    <el-table :data="tableData">
+      <el-table-column property="date" label="日期" width="150" />
+      <el-table-column property="name" label="姓名" width="200" />
+      <el-table-column property="address" label="地址" />
+    </el-table>
+  </el-dialog>
+
+
+<!--  表单-->
+  <el-form :inline="true" :model="formInline" class="demo-form-inline">
+    <el-form-item label="姓名">
+      <el-input v-model="formInline.name" placeholder="请输入姓名" clearable />
+    </el-form-item>
+    <el-form-item label="性别">
+      <el-select
+          v-model="formInline.gender"
+          placeholder="请选择"
+          clearable
+      >
+        <el-option label="男" value="1" />
+        <el-option label="女" value="2" />
+      </el-select>
+    </el-form-item>
+    <el-form-item label="生日">
+      <el-date-picker
+          v-model="formInline.birthday"
+          type="date"
+          placeholder="请选择"
+          value-format="YYYY-MM-DD"
+          clearable
+      />
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit">Query</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts" setup>
@@ -71,7 +113,7 @@ import {
   Star,
 } from '@element-plus/icons-vue'
 
-import { ref } from 'vue'
+import {reactive, ref} from 'vue'
 import type { ComponentSize } from 'element-plus'
 
 
@@ -99,16 +141,31 @@ const tableData = [
 ]
 
 const currentPage4 = ref(4)
-const pageSize4 = ref(100)
+const pageSize4 = ref(10)
 const size = ref('default')
-const background = ref(false)
+const background = ref(true)
 const disabled = ref(false)
+const total = ref(500)
 
 const handleSizeChange = (val: number) => {
   console.log(`${val} items per page`)
 }
 const handleCurrentChange = (val: number) => {
   console.log(`current page: ${val}`)
+}
+
+
+const dialogTableVisible = ref(false)
+
+
+const formInline = reactive({
+  name: '',
+  gender: '',
+  birthday: '',
+})
+
+const onSubmit = () => {
+  console.log(formInline)
 }
 </script>
 
@@ -135,5 +192,13 @@ const handleCurrentChange = (val: number) => {
 
 .button-row > * {
   margin: 0;
+}
+
+.demo-form-inline .el-input {
+  --el-input-width: 220px;
+}
+
+.demo-form-inline .el-select {
+  --el-select-width: 220px;
 }
 </style>
