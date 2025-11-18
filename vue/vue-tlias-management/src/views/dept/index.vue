@@ -1,14 +1,19 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import {queryAllApi} from "@/api/dept";
 
-const tableData = ref([
-  {
-    "id": 1,
-    "name": "学工部",
-    "createTime": "2022-09-01T23:06:29",
-    "updateTime": "2022-09-01T23:06:29"
+onMounted(() => {
+  search()
+})
+
+const search = async () => {
+  const result = await queryAllApi();
+  if (result.code){
+    deptList.value = result.data
   }
-])
+}
+
+const deptList = ref([])
 </script>
 
 <template>
@@ -18,7 +23,7 @@ const tableData = ref([
   </div>
 
   <div class="container">
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table :data="deptList" border style="width: 100%">
       <el-table-column type="index" label="序号" width="100" align="center"/>
       <el-table-column prop="name" label="部门名称" width="260" align="center"/>
       <el-table-column prop="updateTime" label="最后操作时间" width="300" align="center"/>
